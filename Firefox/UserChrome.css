@@ -1,58 +1,136 @@
-@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"); /* only needed once */
+/** Firefox 72.0 fix tabs to be below bookmarks bar... Again! Firefox used to be a good browser **/
 
-/* TABS: on bottom */
-#navigator-toolbox toolbar:not(#nav-bar):not(#toolbar-menubar) {-moz-box-ordinal-group:10}
-#TabsToolbar {-moz-box-ordinal-group:1000!important}
+window[inFullscreen="true"] #browser-bottombox { display:none !important; }
+window[inFullscreen="true"] .browserContainer>statuspanel[type="overLink"] .statuspanel-label { display:none !important; }
 
-#TabsToolbar {
-display: block !important;
-position: absolute !important;
-bottom: 0 !important;
-width: 100vw !important;
+#TabsToolbar,
+.private-browsing-indicator{ display:none !important;}
+
+
+#nav-bar{
+    background: #F9F9FA !important;
+    border: none !important;
+    box-shadow: none !important;
+    position: fixed;
 }
+#TabsToolbar {                                                                  
+  background: #F9F9FA !important;                                             
+  -moz-appearance: unset !important;
+  display:block !important;                         
+}
+
 
 #tabbrowser-tabs {
-width: 100vw !important;
-}
-#main-window:not([chromehidden*="toolbar"]) #navigator-toolbox {padding-bottom: var(--tab-min-height) !important;}
-
-/* TABS: height */
-:root {
---tab-toolbar-navbar-overlap: 0px !important;
---tab-min-height: 27px !important; /* adjust to suit your needs */
-}
-:root #tabbrowser-tabs {
---tab-min-height: 27px !important; /* needs to be the same as above under :root */
---tab-min-width: 80px !important;
+  width: 100vw !important;
 }
 
-#TabsToolbar {
-height: var(--tab-min-height) !important;
-margin-bottom: 1px !important;
-box-shadow: ThreeDShadow 0 -1px inset, -moz-dialog 0 1px !important;
+/* Modify to change window drag space width */
+:root[tabsintitlebar="true"] #nav-bar{ --window-drag-space-width: 24px }
+
+.titlebar-buttonbox-container{
+  position: fixed;
+  top:0;
+  right:0;
+  height: 40px;
+display:block !important;
+}
+#toolbar-menubar[inactive] > .titlebar-buttonbox-container{ opacity: 0 }
+
+:root[sizemode="maximized"] > #navigator-toolbox{ padding-top: 8px !important; }
+:root[sizemode="maximized"] .titlebar-buttonbox-container{ top: 8px }
+
+:root[uidensity="compact"] .titlebar-buttonbox-container{ height: 32px }
+.titlebar-buttonbox-container > .titlebar-buttonbox{ height: 100%; }
+#titlebar{
+ -moz-box-ordinal-group: 2;
+  -moz-appearance: none !important;
+  display:block !important;
+}
+:root[tabsintitlebar="true"] #nav-bar{
+  padding-right: calc(138px + var(--window-drag-space-width,0px));
+  padding-left: var(--window-drag-space-width,0px)
+}
+.titlebar-placeholder,
+#TabsToolbar .titlebar-spacer{ display: none; }
+/* Also hide the toolbox bottom border which isn't at bottom with this setup */
+#navigator-toolbox::after{ display: none !important; }
+
+/* Menubar on top patch - use with Fx65_tabs_on_bottom.css */
+/* Only really useful if menubar is ALWAYS visible */
+
+#navigator-toolbox{ margin-top: 10px;
+padding-top: 8px !important; }
+#toolbar-menubar{
+  position: fixed;
+  background: #F9F9FA !important;
+  top: 0px;
+  bottom: 0px;
+  height: 10px;
+  margin-top:1px;
+  width: 100%;
+  overflow: hidden;
+display:block !important;
+
 }
 
-#tabbrowser-tabs,
-#tabbrowser-tabs > .tabbrowser-arrowscrollbox,
-.tabbrowser-tabs[positionpinnedtabs] > .tabbrowser-tab[pinned] {
-min-height: var(--tab-min-height) !important;
-max-height: var(--tab-min-height) !important;
+#toolbar-menubar .titlebar-buttonbox-container{ height: 13px; }
+#toolbar-menubar .titlebar-button{ padding: 2px 17px !important;  }
+
+/* This will allow you to MAYBE put some items to the menubar */
+#toolbar-menubar > *{ float: left }
+#toolbar-menubar .toolbarbutton-1 { --toolbarbutton-inner-padding: 3px }
+
+
+#statuspanel {
+  background-color: transparent !important;
+  border: none !important;
+  bottom: 3px !important;
+  height: 33px !important;
+  max-width: 25% !important; /* Change the value to suite your needs */
+  transition: none !important;
 }
 
-/* drag space */
-.titlebar-spacer[type="pre-tabs"],
-.titlebar-spacer[type="post-tabs"] {
-width: 40px;
+#statuspanel { opacity: 1 !important }
+#main-window:not([sizemode="fullscreen"]) #statuspanel[inactive] #statuspanel-inner::before {
+  bottom:2px;
+  padding-left:5px;
+  position: fixed;
+  content:"Done";
+  }
+#statuspanel[inactive] #statuspanel-label { display: none !important }
+
+/* If you're not on the latest Nightly,
+change the #statuspanel-inner
+to .statuspanel-inner */
+
+#statuspanel #statuspanel-inner {
+  background-color: transparent !important;
+  border: none !important;
+  height: 23x !important;
 }
 
-/* Override vertical shifts when moving a tab */
-#navigator-toolbox[movingtab] > #titlebar > #TabsToolbar {
-padding-bottom: unset !important;
+/* If you're not on the latest Nightly,
+change the #statuspanel-label
+to .statuspanel-label */
+
+#statuspanel #statuspanel-label {
+  background-color: transparent !important;
+  border: none !important;
+  color: black !important;
 }
-#navigator-toolbox[movingtab] #tabbrowser-tabs {
-padding-bottom: unset !important;
-margin-bottom: unset !important;
+
+
+
+/* Change these if you want more or less space between each button */
+#browser-bottombox toolbarbutton {
+  --toolbarbutton-inner-padding: 2px!important;
+  padding-left: 1px !important;
+  padding-right: 1px !important;
+  margin-left: 0px !important;
+  margin-right: 3px !important;
+  bottom: 0px;
 }
-#navigator-toolbox[movingtab] > #nav-bar {
-margin-top: unset !important;
-}
+
+ /* Make normal density theme bit compact */ :root:not([uidensity=compact]) #back-button { padding-top: 0 !important; padding-bottom: 0 !important; } :root:not([uidensity=compact]) #back-button > .toolbarbutton-icon { background-color: unset !important; border: none !important; } 
+
+

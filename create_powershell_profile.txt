@@ -1,6 +1,30 @@
+## Sprucing up powershell and making life easy on yourself:
+##
 ## To use this (pwsh 7.x+ only not 5.1 it'sn ot supported
 ## To use this, open pwsh 7.x+ and run:
+
+if (!(Test-Path -Path $PROFILE)) {
+  New-Item -ItemType File -Path $PROFILE -Force
+}
+
+Paste this inside:
+
+## Now, run this:
+
+## Iwr https://release-assets.githubusercontent.com/github-production-release-asset/27574418/618d36f5-7bcc-4e03-a153-30d18952aa14?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-02-24T18%3A28%3A04Z&rscd=attachment%3B+filename%3DJetBrainsMono.zip&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-02-24T17%3A27%3A44Z&ske=2026-02-24T18%3A28%3A04Z&sks=b&skv=2018-11-09&sig=lXvMLekBh20Xe3bJsE%2F%2Fy1KqX%2BpnfPTFC9PqQTZeP0s%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc3MTk1ODM0OCwibmJmIjoxNzcxOTU0NzQ4LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.KXpGmguTb_EJyYnBPm6XMqob690JpygOZdhC7VaFRNk&response-content-disposition=attachment%3B%20filename%3DJetBrainsMono.zip&response-content-type=application%2Foctet-stream -OutFile NerdFonts.zip
+
+## Expand-Archive NerdFonts
+## Explorer .\NerdFonts
+## Right click all the files and slect Install (NOT AS ADMIN)
+
+## Now run this. Either as currnet user, or as admin, your choice:
+##
+## install-module -name TerminalIcons -Scope CurrentUser
+## install-module -name NerdFonts -Scope CurrentUser
+## install-module -name CompletionPredictor -Scope CurrentUser
 notepad $PROFILE
+
+## Paste this into it:
 
 ## Enable Terminal-Icons (requires Nerd Font)
 Import-Module PSWriteColor
@@ -13,3 +37,5 @@ Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 Set-PSReadLineOption -PredictionViewStyle ListView
 Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 Set-PSReadLineOption -PredictionViewStyle ListView
+
+## Click save. Restart Window Termianl or Hyper (not HyperTerminal, that's for RS232

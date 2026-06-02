@@ -1,0 +1,15 @@
+## To use this (pwsh 7.x+ only not 5.1 it'sn ot supported
+## To use this, open pwsh 7.x+ and run:
+notepad $PROFILE
+
+## Enable Terminal-Icons (requires Nerd Font)
+Import-Module PSWriteColor
+Import-Module Terminal-Icons
+Import-Module NerdFonts
+Import-Module CompletionPredictor
+
+## Make PSReadLine behave
+Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+Set-PSReadLineOption -PredictionViewStyle ListView
+Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+Set-PSReadLineOption -PredictionViewStyle ListView
